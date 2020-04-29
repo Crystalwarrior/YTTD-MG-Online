@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Decision2.ogg-eb5b73d63daf3f63252a7cd74d9d80f5.oggstr"
+
+[deps]
+
+source_file="res://Decision2.ogg"
+dest_files=[ "res://.import/Decision2.ogg-eb5b73d63daf3f63252a7cd74d9d80f5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
