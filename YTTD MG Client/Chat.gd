@@ -25,14 +25,8 @@ func display_chat_message(msg, playername):
 	newline_text('[color=gray]%s:%s[/color] [color=#%s][b]%s[/b][/color]: %s' % 
 					[time.hour, time.minute, color, playername, msg])
 
-func validate_chat(msg):
-	if msg.empty():
-		return false
-	return true
-
 func stringToColor(string, mix = Color.white, mixcoeff = 0.35):
-	seed(string.hash())
-	var color = Color.from_hsv(randf(), randf()*1.5, randf())
+	var color = Color(string.hash() & 0xffffff)
 
 	# mix the color
 	if (mix != null):
@@ -41,3 +35,8 @@ func stringToColor(string, mix = Color.white, mixcoeff = 0.35):
 		color.b = color.b * (1 - mixcoeff) + mix.b * mixcoeff
 
 	return color
+
+func validate_chat(msg):
+	if msg.empty():
+		return false
+	return true
