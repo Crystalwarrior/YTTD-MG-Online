@@ -19,11 +19,14 @@ func _on_LineEdit_text_entered(new_text):
 	display_chat_message(new_text, Settings.playername)
 	input.clear()
 
-func display_chat_message(msg, playername):
+func display_message(msg):
 	var time = OS.get_time()
+	newline_text('[color=gray]%s:%s[/color] %s' % 
+					[time.hour, time.minute, msg])
+
+func display_chat_message(msg, playername):
 	var color = stringToColor(playername).to_html(false)
-	newline_text('[color=gray]%s:%s[/color] [color=#%s][b]%s[/b][/color]: %s' % 
-					[time.hour, time.minute, color, playername, msg])
+	display_message('[color=#%s][b]%s[/b][/color]: %s' % [color, playername, msg])
 	if Settings.chatsfx:
 		$"/root/Main/Sfx".play()
 

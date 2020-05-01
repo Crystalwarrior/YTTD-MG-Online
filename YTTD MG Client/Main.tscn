@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://GameWindow.gd" type="Script" id=2]
@@ -12,12 +12,15 @@
 [ext_resource path="res://MusicDisplay.gd" type="Script" id=10]
 [ext_resource path="res://bgm/[UNIB] Paradox Altar.ogg" type="AudioStream" id=11]
 [ext_resource path="res://calibri/calibri_italics.tres" type="DynamicFont" id=12]
+[ext_resource path="res://Main.gd" type="Script" id=13]
+[ext_resource path="res://Login.gd" type="Script" id=14]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -6.10352e-05
 theme = ExtResource( 1 )
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -32,6 +35,7 @@ stream = ExtResource( 4 )
 bus = "Sounds"
 
 [node name="GameWindow" type="VBoxContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
@@ -100,7 +104,6 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Help" type="VBoxContainer" parent="GameWindow/HBoxContainer/Chat/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -140,6 +143,7 @@ __meta__ = {
 }
 
 [node name="Current" type="VBoxContainer" parent="GameWindow/HBoxContainer/Chat/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -330,19 +334,19 @@ stream = ExtResource( 9 )
 bus = "Sounds"
 
 [node name="Login" type="CenterContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 14 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="Login"]
-margin_left = 504.0
-margin_top = 293.0
-margin_right = 518.0
-margin_bottom = 307.0
+margin_left = 376.0
+margin_top = 205.0
+margin_right = 646.0
+margin_bottom = 394.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Login/PanelContainer"]
 margin_left = 7.0
@@ -432,3 +436,5 @@ text = "Join!"
 [connection signal="toggled" from="GameWindow/HBoxContainer/VBoxContainer/Info/GridContainer/CheckButton" to="GameWindow/HBoxContainer/VBoxContainer/Info" method="_on_CheckButton_toggled"]
 [connection signal="value_changed" from="GameWindow/HBoxContainer/VBoxContainer/Info/GridContainer/SoundsSlider" to="GameWindow/HBoxContainer/VBoxContainer/Info" method="_on_SoundsSlider_value_changed"]
 [connection signal="value_changed" from="GameWindow/HBoxContainer/VBoxContainer/Info/GridContainer/MusicSlider" to="GameWindow/HBoxContainer/VBoxContainer/Info" method="_on_MusicSlider_value_changed"]
+[connection signal="join" from="Login" to="." method="_on_Login_join"]
+[connection signal="pressed" from="Login/PanelContainer/VBoxContainer/Join" to="Login" method="_on_Join_pressed"]
