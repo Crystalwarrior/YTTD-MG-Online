@@ -1,7 +1,7 @@
 extends PanelContainer
 
-onready var text = $VBoxContainer/ColorRect/RichTextLabel
-onready var input = $VBoxContainer/LineEdit
+onready var text = $TabContainer/Current/ColorRect/RichTextLabel
+onready var input = $TabContainer/Current/LineEdit
 
 func _ready():
 	pass
@@ -24,6 +24,8 @@ func display_chat_message(msg, playername):
 	var color = stringToColor(playername).to_html(false)
 	newline_text('[color=gray]%s:%s[/color] [color=#%s][b]%s[/b][/color]: %s' % 
 					[time.hour, time.minute, color, playername, msg])
+	if Settings.chatsfx:
+		$"/root/Main/Sfx".play()
 
 func stringToColor(string, mix = Color.white, mixcoeff = 0.35):
 	var color = Color(string.hash() & 0xffffff)

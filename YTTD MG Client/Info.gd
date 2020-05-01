@@ -17,3 +17,7 @@ func _on_Button_pressed():
 
 func _on_PlayMusic_pressed():
 	$"/root/Main/Music".play()
+
+
+func _on_CheckButton_toggled(button_pressed):
+	Settings.chatsfx = button_pressed
