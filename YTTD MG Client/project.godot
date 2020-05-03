@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 
 Settings="*res://Settings.gd"
 Time="*res://lib/Time.gd"
+Network="*res://Network.gd"
 
 [rendering]
 

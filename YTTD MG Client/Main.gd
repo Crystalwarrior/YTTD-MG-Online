@@ -2,25 +2,19 @@ extends Control
 
 
 func _ready():
-	get_tree().connect("connected_to_server", self, "enter_room")
+	Network.connect("connection_succeeded", self, "_enter_room")
+	Network.connect("server_disconnected", self, "_leave_room")
 
-func join_room(ip, port):
-	var host = NetworkedMultiplayerENet.new()
-	host.create_client(ip, port)
-	get_tree().set_network_peer(host)
-
-
-func enter_room():
+func _enter_room():
 	$Login.hide()
 	$GameWindow.show()
-	print("nice")
 
 
-func leave_room():
+func _leave_room():
 	$Login.show()
 	$GameWindow.hide()
-	get_tree().set_network_peer(null)
 
 
 func _on_Login_join(player, ip, p):
-	join_room(ip, p)
+	Network.my_name = player
+	Network.connect_to_server(ip, p)

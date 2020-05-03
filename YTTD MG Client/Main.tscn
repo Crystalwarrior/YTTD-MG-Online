@@ -344,17 +344,17 @@ __meta__ = {
 
 [node name="PanelContainer" type="PanelContainer" parent="Login"]
 margin_left = 376.0
-margin_top = 205.0
+margin_top = 188.0
 margin_right = 646.0
-margin_bottom = 394.0
+margin_bottom = 412.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Login/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 263.0
-margin_bottom = 182.0
+margin_bottom = 217.0
 
-[node name="Label" type="Label" parent="Login/PanelContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="Login/PanelContainer/VBoxContainer"]
 margin_right = 256.0
 margin_bottom = 23.0
 text = "Connect to Server"
@@ -425,10 +425,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Join" type="Button" parent="Login/PanelContainer/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="Login/PanelContainer/VBoxContainer"]
 margin_top = 146.0
 margin_right = 256.0
-margin_bottom = 175.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 256, 0 )
+
+[node name="InfoLabel" type="Label" parent="Login/PanelContainer/VBoxContainer"]
+margin_top = 154.0
+margin_right = 256.0
+margin_bottom = 177.0
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Join" type="Button" parent="Login/PanelContainer/VBoxContainer"]
+margin_top = 181.0
+margin_right = 256.0
+margin_bottom = 210.0
 text = "Join!"
 [connection signal="text_entered" from="GameWindow/HBoxContainer/Chat/TabContainer/Current/LineEdit" to="GameWindow/HBoxContainer/Chat" method="_on_LineEdit_text_entered"]
 [connection signal="pressed" from="GameWindow/HBoxContainer/VBoxContainer/Info/GridContainer/Button" to="GameWindow/HBoxContainer/VBoxContainer/Info" method="_on_Button_pressed"]

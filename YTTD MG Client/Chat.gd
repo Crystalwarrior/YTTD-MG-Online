@@ -4,7 +4,7 @@ onready var text = $TabContainer/Current/ColorRect/RichTextLabel
 onready var input = $TabContainer/Current/LineEdit
 
 func _ready():
-	pass
+	Network.connect("chat_message_received", self, "_on_chat_message_received")
 
 func append_text(msg):
 	text.bbcode_text += msg
@@ -16,8 +16,16 @@ func set_text(msg):
 	text.bbcode_text = msg
 
 func _on_LineEdit_text_entered(new_text):
-	display_chat_message(new_text, Settings.playername)
+	Network.send_message(new_text)
 	input.clear()
+
+func _on_chat_message_received(id, msg):
+	var playername
+	if id == get_tree().get_network_unique_id():
+		playername = Network.my_name
+	else:
+		playername = Network.players[id]
+	display_chat_message(msg, playername)
 
 func display_message(msg):
 	var time = OS.get_time()
