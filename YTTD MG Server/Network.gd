@@ -3,6 +3,8 @@ extends Node
 const PORT = 36999
 const MAX_USERS = 100 #not including host
 
+const MAX_CHAT_LENGTH = 128
+
 var players = {} #players dict id:name
 
 func _ready():
@@ -36,13 +38,14 @@ remote func register_player(new_player_name):
 	# Add everyone to new player:
 	for p_id in players:
 		rpc_id(caller_id, "register_player", p_id, players[p_id]) # Send each player to new dude
-	
-	rpc("register_player", caller_id, players[caller_id]) # Send new dude to all players
-	# NOTE: this means new player's register gets called twice, but fine as same info sent both times
-	
+		if p_id != caller_id:
+			rpc_id(p_id, "register_player", caller_id, players[caller_id]) # Send new dude to all players
+
+	rpc("receive_message", "", "[color=gray]Player '%s' has joined the server.[/color]" % players[caller_id])
 	print("Client ", caller_id, " registered as ", new_player_name)
 
 puppetsync func unregister_player(id):
+	rpc("receive_message", "", "[color=gray]Player '%s' has left the server.[/color]" % players[id])
 	players.erase(id)
 	print("Client ", id, " was unregistered")
 
@@ -51,5 +54,18 @@ remote func receive_message(msg):
 	if not players.has(caller_id):
 		print('Unknown ID %s!' % caller_id)
 		return
+	msg = msg.strip_escapes()
+	msg = msg.strip_edges()
+	msg = strip_bbcode(msg)
+	msg = msg.left(MAX_CHAT_LENGTH) #limit the string size
+	if msg.empty():
+		return
 	print("%s: %s" % [players[caller_id], msg])
-	rpc("receive_message", caller_id, msg) #send the message to all players
+	rpc("receive_message", players[caller_id], msg) #send the message to all players
+
+
+func strip_bbcode(msg):
+	var regex = RegEx.new()
+	regex.compile('\\[\\/?[^ \\/\\]]*]')
+	msg = regex.sub(msg, '', true)
+	return msg

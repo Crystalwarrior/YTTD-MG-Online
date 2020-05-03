@@ -19,22 +19,21 @@ func _on_LineEdit_text_entered(new_text):
 	Network.send_message(new_text)
 	input.clear()
 
-func _on_chat_message_received(id, msg):
-	var playername
-	if id == get_tree().get_network_unique_id():
-		playername = Network.my_name
-	else:
-		playername = Network.players[id]
-	display_chat_message(msg, playername)
+func _on_chat_message_received(pname, msg):
+	display_chat_message(pname, msg)
 
 func display_message(msg):
 	var time = OS.get_time()
 	newline_text('[color=gray]%s:%s[/color] %s' % 
-					[time.hour, time.minute, msg])
+					[str(time.hour).pad_zeros(2), str(time.minute).pad_zeros(2), msg])
 
-func display_chat_message(msg, playername):
-	var color = stringToColor(playername).to_html(false)
-	display_message('[color=#%s][b]%s[/b][/color]: %s' % [color, playername, msg])
+func display_chat_message(playername, msg):
+	if playername.empty():
+		display_message(msg)
+	else:
+		var color = stringToColor(playername).to_html(false)
+		display_message('[color=#%s][b]%s[/b][/color]: %s' % [color, playername, msg])
+
 	if Settings.chatsfx:
 		$"/root/Main/Sfx".play()
 

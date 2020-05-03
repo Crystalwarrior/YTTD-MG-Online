@@ -6,7 +6,7 @@ signal connection_succeeded()
 signal server_disconnected()
 signal player_registered(id)
 signal player_unregistered(id)
-signal chat_message_received(id, msg)
+signal chat_message_received(pname, msg)
 
 var my_name = "Player"
 
@@ -51,8 +51,8 @@ puppet func unregister_player(id):
 	emit_signal("player_unregistered", id)
 	players.erase(id)
 
-remote func receive_message(id, msg):
-	emit_signal("chat_message_received", id, msg)
+remote func receive_message(pname, msg):
+	emit_signal("chat_message_received", pname, msg)
 
 func send_message(msg):
 	rpc_id(1, "receive_message", msg)
