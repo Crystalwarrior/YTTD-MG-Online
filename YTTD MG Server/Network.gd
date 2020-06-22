@@ -41,11 +41,11 @@ remote func register_player(new_player_name):
 		if p_id != caller_id:
 			rpc_id(p_id, "register_player", caller_id, players[caller_id]) # Send new dude to all players
 
-	rpc("receive_message", "", "[color=gray]Player '%s' has joined the server.[/color]" % players[caller_id])
+	send_server_message("[color=gray]Player '%s' has joined the server.[/color]" % players[caller_id])
 	print("Client ", caller_id, " registered as ", new_player_name)
 
 puppetsync func unregister_player(id):
-	rpc("receive_message", "", "[color=gray]Player '%s' has left the server.[/color]" % players[id])
+	send_server_message("[color=gray]Player '%s' has left the server.[/color]" % players[id])
 	players.erase(id)
 	print("Client ", id, " was unregistered")
 
@@ -63,6 +63,12 @@ remote func receive_message(msg):
 	print("%s: %s" % [players[caller_id], msg])
 	rpc("receive_message", players[caller_id], msg) #send the message to all players
 
+func send_server_message(msg):
+	rpc("receive_message", "", msg)
+	print(msg)
+
+func send_server_message_id(id, msg):
+	rpc_id(id, "receive_message", "", msg)
 
 func strip_bbcode(msg):
 	var regex = RegEx.new()
