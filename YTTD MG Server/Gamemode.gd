@@ -16,7 +16,7 @@ var phases = [
 	{"name": "results", "time": 5},
 ]
 
-enum Outcome {EVERYONE_DIES, WIN_AND_PICK, WIN_ALONE, LOSE, NOBODY_DIES}
+enum Outcome {EVERYONE_DIES, WIN_AND_PICK, WIN_ALONE, DIE, NOBODY_DIES}
 
 var current_phase = 0
 var roles = {
@@ -35,18 +35,18 @@ var roles = {
 	"sage": {
 		"priority": 2, #lower number = higher priority
 		"votes": 1, #number of votes this role can do
-		"majority": Outcome.LOSE, #the outcome of majority vote on this role
+		"majority": Outcome.DIE, #the outcome of majority vote on this role
 		"color": "deepskyblue",
 	},
 	"commoner": {
 		"priority": 3, #lower number = higher priority
 		"votes": 1, #number of votes this role can do
-		"majority": Outcome.LOSE, #the outcome of majority vote on this role
+		"majority": Outcome.DIE, #the outcome of majority vote on this role
 		"color": "mediumseagreen",
 	},
 }
 var min_participants = 5
-var participants = [] #{name: "guy", "id": 12341413, role: "sacrifice", votes: 0} #list of dictionaries containing all info pertaining to participants
+var participants = [] #{name: "guy", "id": 12341413, role: "sacrifice", voted_by: []} #list of dictionaries containing all info pertaining to participants
 
 func _process(delta):
 	if progressbar.max_value != $Timer.wait_time:
@@ -54,11 +54,11 @@ func _process(delta):
 	progressbar.value = timer.time_left
 
 func add_participant(Name, id):
-	participants.append({"name": Name, "id": id, "role": "", "votes": 0})
+	participants.append({"name": Name, "id": id, "role": "", "voted_by": []})
 
 func clear_votes():
 	for player in participants:
-		player.votes = 0
+		player.voted_by.clear()
 
 func get_participant_name(_name):
 	for player in participants:
@@ -83,11 +83,11 @@ func assign_roles():
 
 class MGSorter:
 	static func votes_highest(a, b):
-		if a["votes"] < b["votes"]:
+		if a["voted_by"].size() < b["voted_by"].size():
 			return true
 		return false
 	static func votes_lowest(a, b):
-		if a["votes"] > b["votes"]:
+		if a["voted_by"].size() > b["voted_by"].size():
 			return true
 		return false
 

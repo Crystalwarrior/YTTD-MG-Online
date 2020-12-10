@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://GameWindow.gd" type="Script" id=2]
@@ -14,6 +14,12 @@
 [ext_resource path="res://calibri/calibri_italics.tres" type="DynamicFont" id=12]
 [ext_resource path="res://Main.gd" type="Script" id=13]
 [ext_resource path="res://Login.gd" type="Script" id=14]
+[ext_resource path="res://gfx/vignette.png" type="Texture" id=15]
+[ext_resource path="res://shaders/vignette.shader" type="Shader" id=16]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 16 )
+shader_param/vignette = ExtResource( 15 )
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -35,11 +41,11 @@ stream = ExtResource( 4 )
 bus = "Sounds"
 
 [node name="GameWindow" type="VBoxContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
@@ -48,9 +54,6 @@ __meta__ = {
 margin_right = 1023.0
 margin_bottom = 23.0
 script = ExtResource( 10 )
-__meta__ = {
-"_edit_group_": true
-}
 music_node = NodePath("../../Music")
 
 [node name="TrackName" type="Label" parent="GameWindow/MusicDisplay"]
@@ -91,7 +94,6 @@ margin_bottom = 573.0
 size_flags_horizontal = 3
 script = ExtResource( 6 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -211,6 +213,7 @@ margin_left = 7.0
 margin_top = 7.0
 margin_right = 280.0
 margin_bottom = 353.0
+select_mode = 1
 fixed_icon_size = Vector2( 32, 32 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -333,11 +336,60 @@ __meta__ = {
 stream = ExtResource( 9 )
 bus = "Sounds"
 
+[node name="Effects" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="vignette" type="ColorRect" parent="Effects"]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Voting" type="CenterContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Players" type="PanelContainer" parent="Voting"]
+margin_left = 504.0
+margin_top = 293.0
+margin_right = 518.0
+margin_bottom = 307.0
+
+[node name="ItemList" type="ItemList" parent="Voting/Players"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 307.0
+margin_bottom = 176.0
+rect_min_size = Vector2( 300, 0 )
+items = [ "Item 0", null, false, "Item 1", null, false, "Item 2", null, false, "Item 3", null, false, "Item 4", null, false, "Item 5", null, false, "Item 6", null, false, "Item 7", null, false, "Item 8", null, false, "Item 9", null, false, "Item 10", null, false ]
+select_mode = 1
+auto_height = true
+max_columns = 2
+same_column_width = true
+fixed_icon_size = Vector2( 32, 32 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Login" type="CenterContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 14 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }

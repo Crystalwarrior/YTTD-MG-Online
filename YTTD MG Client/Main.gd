@@ -7,12 +7,12 @@ func _ready():
 
 func _enter_room():
 	$Login.hide()
-	$GameWindow.show()
+	$Effects.hide()
 
 
 func _leave_room():
 	$Login.show()
-	$GameWindow.hide()
+	$Effects.show()
 
 
 func _on_Login_join(player, ip, p):
