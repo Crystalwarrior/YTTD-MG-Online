@@ -497,6 +497,7 @@ margin_top = 181.0
 margin_right = 256.0
 margin_bottom = 210.0
 text = "Join!"
+
 [connection signal="text_entered" from="GameWindow/HBoxContainer/Chat/TabContainer/Current/LineEdit" to="GameWindow/HBoxContainer/Chat" method="_on_LineEdit_text_entered"]
 [connection signal="pressed" from="GameWindow/HBoxContainer/VBoxContainer/Info/GridContainer/Button" to="GameWindow/HBoxContainer/VBoxContainer/Info" method="_on_Button_pressed"]
 [connection signal="pressed" from="GameWindow/HBoxContainer/VBoxContainer/Info/GridContainer/PlayMusic" to="GameWindow/HBoxContainer/VBoxContainer/Info" method="_on_PlayMusic_pressed"]

@@ -22,4 +22,5 @@ percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="timeout" from="Gamemode/Timer" to="Gamemode" method="_on_Timer_timeout"]
